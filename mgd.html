@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>העלון הדיגיטלי</title>
+  <link rel="icon" type="image/icon" href="magazine.ico" />
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #f0f4f8;
+      color: #333;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+      align-items: center;
+      justify-content: space-between;
+      padding: 20px;
+      box-sizing: border-box;
+    }
+    .embed-container {
+      width: 100%;
+      max-width: 900px;
+      aspect-ratio: 16 / 9;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+      border-radius: 15px;
+      overflow: hidden;
+      background: #fff;
+      margin-bottom: 20px;
+    }
+    iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+      display: block;
+    }
+    a.btn {
+      background: #2a9d8f;
+      color: #fff;
+      border: none;
+      border-radius: 30px;
+      padding: 15px 35px;
+      font-size: 1.2rem;
+      cursor: pointer;
+      text-decoration: none;
+      box-shadow: 0 4px 12px rgba(42, 157, 143, 0.4);
+      transition: background-color 0.3s ease, box-shadow 0.3s ease;
+      user-select: none;
+    }
+    a.btn:hover, a.btn:focus {
+      background: #21867a;
+      box-shadow: 0 6px 18px rgba(33, 134, 122, 0.6);
+      outline: none;
+    }
+    @media (max-width: 500px) {
+      .embed-container {
+        aspect-ratio: 4 / 3;
+        max-width: 100%;
+      }
+      a.btn {
+        width: 100%;
+        padding: 15px 0;
+        font-size: 1rem;
+      }
+    }
+    footer {
+      text-align: center;
+      font-size: 0.9rem;
+      color: #555555;
+      padding: 15px 0;
+      border-top: 1px solid #ddd;
+      user-select: none;
+      background-color: #fafafa;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin-top: auto;
+      width: 100%;
+      max-width: 900px;
+      border-radius: 0 0 15px 15px;
+    }
+  </style>
+</head>
+<body>
+  
+  <div class="embed-container">
+    <iframe 
+      src="https://www.canva.com/design/DAGslo8rJoo/i4bBAhV2bCeBQ49tyEYB9Q/view?utm_content=DAGslo8rJoo&utm_campaign=designshare&utm_medium=link2&utm_source=uniquelinks&utlId=hf139a44123" 
+      allowfullscreen
+      title="העלון"
+      loading="lazy"
+      referrerpolicy="no-referrer-when-downgrade"
+    ></iframe>
+  </div>
+
+  <a href="http://magazine-v1.hamakom.ovh/" target="_blank" rel="noopener" class="btn" aria-label="לחזרה לדף הראשי לחץ עליי">
+    לחזרה לדף הראשי לחץ עליי
+  </a>
+
+  <footer>© כל הזכויות שמורות לא. כהן פיתוח ותכנות</footer>
+
+</body>
+</html>
