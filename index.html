@@ -1,65 +1,96 @@
 <!DOCTYPE html>
 <html lang="he" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>מגזין ו'1</title>
-       <link rel="icon" type="image/icon" href="magazine.ico">        
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-            background-color: #f0f2f5;
-            text-align: center;
-            direction: rtl;
-        }
-        .container {
-            padding: 20px;
-        }
-        h1 {
-            font-size: 3.5em; /* גודל כותרת ראשית */
-            color: #333;
-            margin-bottom: 20px;
-        }
-        p {
-            font-size: 1.8em; /* גודל טקסט משני */
-            color: #666;
-        }
-        a {
-            color: #007bff;
-            text-decoration: none;
-        }
-        a:hover {
-            text-decoration: underline;
-        }
-
-        /* התאמה למסכים קטנים (מובייל) */
-        @media (max-width: 600px) {
-            h1 {
-                font-size: 2.5em;
-            }
-            p {
-                font-size: 1.2em;
-            }
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>מגזין ו'1</title>
+  <link rel="icon" type="image/icon" href="magazine.ico" />
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      margin: 0;
+      background-color: #f0f2f5;
+      text-align: center;
+      direction: rtl;
+      padding-bottom: 50px; /* מקום לכותרת תחתונה */
+    }
+    .container {
+      padding: 20px;
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    h1 {
+      font-size: 3.5em;
+      color: #333;
+      margin-bottom: 20px;
+    }
+    p {
+      font-size: 1.8em;
+      color: #666;
+    }
+    a {
+      color: #007bff;
+      text-decoration: none;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+    .footer {
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      background: #f0f2f5;
+      text-align: center;
+      font-size: 1em;
+      color: #666;
+      padding: 10px 0;
+      box-shadow: 0 -1px 5px rgba(0, 0, 0, 0.1);
+      direction: rtl;
+      user-select: none;
+    }
+  </style>
 </head>
 <body>
-    <div class="container">
-        <h1>האתר בפיתוח</h1>
-        <p>
-            ליצירת קשר במייל: 
-            <a href="mailto:admin@magazine-v1.hamakom.ovh">admin@magazine-v1.hamakom.ovh</a>
-        </p>
+  <div class="container">
+    <h1>האתר בפיתוח</h1>
+    <p>
+      ליצירת קשר במייל:
+      <a href="mailto:admin@magazine-v1.hamakom.ovh">admin@magazine-v1.hamakom.ovh</a>
+    </p>
+  </div>
 
+  <!-- כפתור עגול צף -->
+  <a class="fab-button" href="http://magazine-v1d.hamakom.ovh/" target="_blank" style="
+    position: fixed;
+    bottom: 70px;
+    right: 20px;
+    background-color: #28a745;
+    color: white;
+    padding: 14px 20px;
+    border-radius: 50px;
+    font-size: 15px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    z-index: 999;
+  ">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" style="width:22px; height:22px; fill:white;">
+      <path d="M19 3H5a2 2 0 0 0-2 2v14a3 3 0 0 0 3 3h14a1 1 0 0 0 1-1V5a2 2 0 0 0-2-2Zm0 16H6a1 1 0 0 1-1-1V5h14v14ZM8 7h8v2H8V7Zm0 4h8v2H8v-2Zm0 4h5v2H8v-2Z"/>
+    </svg>
+    עלון שבועי דיגיטלי
+  </a>
 
-
-  <p>© כל הזכויות שמורות לא. כהן פיתוח ותכנות</p>
-
-    </div>
+  <div class="footer">
+    © כל הזכויות שמורות לא. כהן פיתוח ותכנות
+  </div>
 </body>
 </html>
