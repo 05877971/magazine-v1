@@ -47,6 +47,9 @@
       box-shadow: 0 4px 12px rgba(42, 157, 143, 0.4);
       transition: background-color 0.3s ease, box-shadow 0.3s ease;
       user-select: none;
+      margin: 10px 0;
+      text-align: center;
+      display: inline-block;
     }
     a.btn:hover, a.btn:focus {
       background: #21867a;
@@ -82,9 +85,10 @@
 </head>
 <body>
   
+  <!-- iframe -->
   <div class="embed-container">
     <iframe 
-src="https://www.canva.com/design/DAGxvjPAYYg/9MJG6OXZHuThg2vn8Hk7GA/view?utm_content=DAGxvjPAYYg&utm_campaign=designshare&utm_medium=link2&utm_source=uniquelinks"
+      src="https://www.canva.com/design/DAGxvjPAYYg/9MJG6OXZHuThg2vn8Hk7GA/view?utm_content=DAGxvjPAYYg&utm_campaign=designshare&utm_medium=link2&utm_source=uniquelinks" 
       allowfullscreen
       title="העלון"
       loading="lazy"
@@ -92,8 +96,18 @@ src="https://www.canva.com/design/DAGxvjPAYYg/9MJG6OXZHuThg2vn8Hk7GA/view?utm_co
     ></iframe>
   </div>
 
-  <a href="http://magazine-v1.hamakom.ovh/" target="_blank" rel="noopener" class="btn" aria-label="לחזרה לדף הראשי לחץ עליי">
-    לחזרה לדף הראשי לחץ עליי
+  <!-- כפתור חזרה לדף הראשי -->
+  <a href="http://magazine-v1.hamakom.ovh/" target="_blank" rel="noopener" class="btn" aria-label="לחזרה לדף הראשי">
+    לחזרה לדף הראשי
+  </a>
+
+  <!-- כפתור לפתיחת העלון ב-Canva -->
+  <a href="https://www.canva.com/design/DAGxvjPAYYg/9MJG6OXZHuThg2vn8Hk7GA/view" 
+     target="_blank" 
+     rel="noopener" 
+     class="btn" 
+     aria-label="פתח את העלון ב-Canva">
+     פתח את העלון ב-Canva
   </a>
 
   <footer>© כל הזכויות שמורות לא. כהן פיתוח ותכנות</footer>
