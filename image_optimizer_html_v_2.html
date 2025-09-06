@@ -8,7 +8,8 @@
   body { font-family: Arial, sans-serif; background: #f0f0f0; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; }
   .container { background: #fff; padding: 25px; border-radius: 25px; box-shadow: 0 8px 20px rgba(0,0,0,0.2); max-width: 400px; width: 90%; text-align: center; }
   h2 { margin-bottom: 20px; color: #ff6f61; }
-  input[type=file] { display: block; margin: 15px auto; }
+  .drop-area { border: 2px dashed #ff6f61; padding: 20px; border-radius: 20px; cursor: pointer; margin-bottom: 15px; transition: background 0.3s; }
+  .drop-area.hover { background: #ffe5e0; }
   img { max-width: 100%; margin-bottom: 15px; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
   button { padding: 12px 25px; margin-top: 10px; border: none; border-radius: 20px; background: #ff6f61; color: white; font-weight: bold; font-size: 16px; cursor: pointer; transition: 0.3s; width: 80%; }
   button:hover { background: #ff3b2e; }
@@ -20,13 +21,15 @@
 <body>
 <div class="container">
   <h2>בדיקת תמונה והמרה</h2>
-  <input type="file" id="imageInput" accept="image/*">
+  <div class="drop-area" id="dropArea">גרור כאן תמונה או לחץ כדי לבחור</div>
+  <input type="file" id="imageInput" accept="image/*" style="display:none;">
   <img id="preview" src="#" alt="תצוגה מקדימה" style="display:none;">
   <button id="checkBtn">בדוק תמונה</button>
   <div id="status"></div>
   <div id="downloadDiv"></div>
 </div>
 <script>
+  const dropArea = document.getElementById('dropArea');
   const input = document.getElementById('imageInput');
   const preview = document.getElementById('preview');
   const status = document.getElementById('status');
@@ -34,8 +37,19 @@
   const downloadDiv = document.getElementById('downloadDiv');
   let imageFile;
 
-  input.addEventListener('change', e => {
-    imageFile = e.target.files[0];
+  dropArea.addEventListener('click', () => input.click());
+  input.addEventListener('change', e => handleFile(e.target.files[0]));
+
+  dropArea.addEventListener('dragover', e => { e.preventDefault(); dropArea.classList.add('hover'); });
+  dropArea.addEventListener('dragleave', e => { e.preventDefault(); dropArea.classList.remove('hover'); });
+  dropArea.addEventListener('drop', e => {
+    e.preventDefault();
+    dropArea.classList.remove('hover');
+    handleFile(e.dataTransfer.files[0]);
+  });
+
+  function handleFile(file){
+    imageFile = file;
     if(imageFile){
       const reader = new FileReader();
       reader.onload = function(ev){
@@ -46,16 +60,11 @@
       };
       reader.readAsDataURL(imageFile);
     }
-  });
+  }
 
   checkBtn.addEventListener('click', () => {
-    if(!imageFile){
-      alert('בחר תמונה קודם!');
-      return;
-    }
-
-    const threshold = 1 * 1024 * 1024; // 1MB
-
+    if(!imageFile){ alert('בחר תמונה קודם!'); return; }
+    const threshold = 1 * 1024 * 1024;
     if(imageFile.size <= threshold){
       status.textContent = `✅ הקובץ בסדר! גודל: ${(imageFile.size/1024/1024).toFixed(2)} MB`;
       downloadDiv.innerHTML = '';
