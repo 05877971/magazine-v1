@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>בדיקת תמונה והמרה</title>
+<style>
+  body { font-family: Arial, sans-serif; background: #f0f0f0; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; }
+  .container { background: #fff; padding: 25px; border-radius: 25px; box-shadow: 0 8px 20px rgba(0,0,0,0.2); max-width: 400px; width: 90%; text-align: center; }
+  h2 { margin-bottom: 20px; color: #ff6f61; }
+  input[type=file] { display: block; margin: 15px auto; }
+  img { max-width: 100%; margin-bottom: 15px; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
+  button { padding: 12px 25px; margin-top: 10px; border: none; border-radius: 20px; background: #ff6f61; color: white; font-weight: bold; font-size: 16px; cursor: pointer; transition: 0.3s; width: 80%; }
+  button:hover { background: #ff3b2e; }
+  #status { margin-top: 15px; font-weight: bold; font-size: 16px; color: #333; }
+  a.downloadLink { display: inline-block; margin-top: 15px; padding: 10px 20px; background: #4CAF50; color: white; border-radius: 20px; text-decoration: none; font-weight: bold; font-size: 16px; transition: 0.3s; }
+  a.downloadLink:hover { background: #3e8e41; }
+</style>
+</head>
+<body>
+<div class="container">
+  <h2>בדיקת תמונה והמרה</h2>
+  <input type="file" id="imageInput" accept="image/*">
+  <img id="preview" src="#" alt="תצוגה מקדימה" style="display:none;">
+  <button id="checkBtn">בדוק תמונה</button>
+  <div id="status"></div>
+  <div id="downloadDiv"></div>
+</div>
+<script>
+  const input = document.getElementById('imageInput');
+  const preview = document.getElementById('preview');
+  const status = document.getElementById('status');
+  const checkBtn = document.getElementById('checkBtn');
+  const downloadDiv = document.getElementById('downloadDiv');
+  let imageFile;
+
+  input.addEventListener('change', e => {
+    imageFile = e.target.files[0];
+    if(imageFile){
+      const reader = new FileReader();
+      reader.onload = function(ev){
+        preview.src = ev.target.result;
+        preview.style.display = 'block';
+        status.textContent = `גודל קובץ: ${(imageFile.size/1024/1024).toFixed(2)} MB | סוג: ${imageFile.type}`;
+        downloadDiv.innerHTML = '';
+      };
+      reader.readAsDataURL(imageFile);
+    }
+  });
+
+  checkBtn.addEventListener('click', () => {
+    if(!imageFile){
+      alert('בחר תמונה קודם!');
+      return;
+    }
+
+    const threshold = 1 * 1024 * 1024; // 1MB
+
+    if(imageFile.size <= threshold){
+      status.textContent = `✅ הקובץ בסדר! גודל: ${(imageFile.size/1024/1024).toFixed(2)} MB`;
+      downloadDiv.innerHTML = '';
+    } else {
+      status.textContent = `⚠️ הקובץ כבד (${(imageFile.size/1024/1024).toFixed(2)} MB), ניתן להמיר ולהקטין`;
+      const convertBtn = document.createElement('button');
+      convertBtn.textContent = 'המר והקטן';
+      convertBtn.onclick = () => {
+        const img = new Image();
+        const reader = new FileReader();
+        reader.onload = function(ev){
+          img.src = ev.target.result;
+          img.onload = function(){
+            const canvas = document.createElement('canvas');
+            const maxWidth = 800;
+            const scale = Math.min(maxWidth / img.width, 1);
+            canvas.width = img.width * scale;
+            canvas.height = img.height * scale;
+            const ctx = canvas.getContext('2d');
+            ctx.drawImage(img,0,0,canvas.width,canvas.height);
+            canvas.toBlob(blob => {
+              const newFile = new File([blob], 'converted.jpg', { type: 'image/jpeg' });
+              const url = URL.createObjectURL(newFile);
+              const a = document.createElement('a');
+              a.href = url;
+              a.download = newFile.name;
+              a.textContent = `⬇️ הורד את הקובץ המומר (${(newFile.size/1024/1024).toFixed(2)} MB)`;
+              a.className = 'downloadLink';
+              downloadDiv.innerHTML = '';
+              downloadDiv.appendChild(a);
+              status.textContent = `✅ ההמרה הושלמה! גודל חדש: ${(newFile.size/1024/1024).toFixed(2)} MB`;
+            }, 'image/jpeg', 0.7);
+          };
+        };
+        reader.readAsDataURL(imageFile);
+      };
+      downloadDiv.innerHTML = '';
+      downloadDiv.appendChild(convertBtn);
+    }
+  });
+</script>
+</body>
+</html>
