@@ -65,45 +65,38 @@
   checkBtn.addEventListener('click', () => {
     if(!imageFile){ alert('בחר תמונה קודם!'); return; }
     const threshold = 1 * 1024 * 1024;
-    if(imageFile.size <= threshold){
-      status.textContent = `✅ הקובץ בסדר! גודל: ${(imageFile.size/1024/1024).toFixed(2)} MB`;
-      downloadDiv.innerHTML = '';
-    } else {
-      status.textContent = `⚠️ הקובץ כבד (${(imageFile.size/1024/1024).toFixed(2)} MB), ניתן להמיר ולהקטין`;
-      const convertBtn = document.createElement('button');
-      convertBtn.textContent = 'המר והקטן';
-      convertBtn.onclick = () => {
-        const img = new Image();
-        const reader = new FileReader();
-        reader.onload = function(ev){
-          img.src = ev.target.result;
-          img.onload = function(){
-            const canvas = document.createElement('canvas');
-            const maxWidth = 800;
-            const scale = Math.min(maxWidth / img.width, 1);
-            canvas.width = img.width * scale;
-            canvas.height = img.height * scale;
-            const ctx = canvas.getContext('2d');
-            ctx.drawImage(img,0,0,canvas.width,canvas.height);
-            canvas.toBlob(blob => {
-              const newFile = new File([blob], 'converted.jpg', { type: 'image/jpeg' });
-              const url = URL.createObjectURL(newFile);
-              const a = document.createElement('a');
-              a.href = url;
-              a.download = newFile.name;
-              a.textContent = `⬇️ הורד את הקובץ המומר (${(newFile.size/1024/1024).toFixed(2)} MB)`;
-              a.className = 'downloadLink';
-              downloadDiv.innerHTML = '';
-              downloadDiv.appendChild(a);
-              status.textContent = `✅ ההמרה הושלמה! גודל חדש: ${(newFile.size/1024/1024).toFixed(2)} MB`;
-            }, 'image/jpeg', 0.7);
-          };
-        };
-        reader.readAsDataURL(imageFile);
+    const img = new Image();
+    const reader = new FileReader();
+    reader.onload = function(ev){
+      img.src = ev.target.result;
+      img.onload = function(){
+        const canvas = document.createElement('canvas');
+        const maxWidth = 800;
+        const scale = Math.min(maxWidth / img.width, 1);
+        canvas.width = img.width * scale;
+        canvas.height = img.height * scale;
+        const ctx = canvas.getContext('2d');
+        ctx.drawImage(img,0,0,canvas.width,canvas.height);
+        canvas.toBlob(blob => {
+          const newFile = new File([blob], 'converted.jpg', { type: 'image/jpeg' });
+          if(newFile.size < imageFile.size){
+            status.textContent = `⚠️ אפשר להקטין את הקובץ! גודל חדש משוער: ${(newFile.size/1024/1024).toFixed(2)} MB`;
+            const a = document.createElement('a');
+            const url = URL.createObjectURL(newFile);
+            a.href = url;
+            a.download = newFile.name;
+            a.textContent = `⬇️ הורד את הקובץ המומר (${(newFile.size/1024/1024).toFixed(2)} MB)`;
+            a.className = 'downloadLink';
+            downloadDiv.innerHTML = '';
+            downloadDiv.appendChild(a);
+          } else {
+            status.textContent = `✅ הקובץ בסדר, לא ניתן להקטין יותר משמעותית`;
+            downloadDiv.innerHTML = '';
+          }
+        }, 'image/jpeg', 0.7);
       };
-      downloadDiv.innerHTML = '';
-      downloadDiv.appendChild(convertBtn);
-    }
+    };
+    reader.readAsDataURL(imageFile);
   });
 </script>
 </body>
