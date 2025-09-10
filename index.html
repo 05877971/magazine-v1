@@ -6,51 +6,50 @@
   <title>מגזין ז'1</title>
   <link rel="icon" type="image/icon" href="magazine.ico" />
   <style>
-    html,body{height:100%;margin:0}
+    html,body{height:100%;margin:0; overflow:auto;}
     :root{--accent1:#ff6a00;--accent2:#ee0979;--accent3:#6a11cb;--accent4:#2575fc}
 
     body {
       font-family: "Segoe UI", Arial, sans-serif;
       direction: rtl;
-      overflow:hidden;
       background: radial-gradient(800px 400px at 10% 15%, rgba(255,220,220,0.25) 0%, transparent 12%),
                   linear-gradient(135deg, #ffd7a6 0%, #ffe5f1 25%, #cfe9ff 62%, #b3ffd1 100%);
-      display:flex; align-items:center; justify-content:center;
-      flex-direction:column;
+      display:flex; flex-direction:column;
+      min-height:100vh;
     }
 
     .highlight-box{
       box-sizing:border-box;
-      width:100vw; flex-grow:1;
+      width:90vw;
+      max-width:800px;
+      margin:20px auto;
       padding:7vh 6vw;
-      display:flex; flex-direction:column; gap:28px; align-items:center; justify-content:center;
+      display:flex; flex-direction:column; gap:28px; align-items:center;
       background: linear-gradient(120deg, rgba(255,255,255,0.06), rgba(255,255,255,0.12));
       backdrop-filter: blur(6px) saturate(1.05);
+      border-radius:20px;
     }
 
-    h1{ font-size: clamp(1.8rem, 4.2vw, 3.2rem); margin:0; color:#111; text-align:center; }
-    p{ font-size: clamp(1rem, 2.6vw, 1.4rem); margin:0; color:#222; text-align:center }
+    h1{ font-size: clamp(1.6rem, 4vw, 3rem); margin:0; color:#111; text-align:center; }
+    p{ font-size: clamp(0.95rem, 2.2vw, 1.3rem); margin:0; color:#222; text-align:center }
 
     .email-box {
-      display:flex; flex-direction:column; gap:12px; padding:20px; border-radius:20px;
+      display:flex; flex-direction:column; gap:12px; padding:15px; border-radius:20px;
       background: rgba(255,255,255,0.85); box-shadow:0 8px 24px rgba(0,0,0,0.1);
       text-align:center;
     }
     .email-wrap{ display:flex; gap:14px; align-items:center; justify-content:center; flex-wrap:wrap }
-    .email-link{ font-weight:900; font-size: clamp(1.05rem, 2.6vw, 1.45rem); color:#081229; text-decoration:none }
+    .email-link{ font-weight:900; font-size: clamp(1rem, 2.2vw, 1.35rem); color:#081229; text-decoration:none }
 
     .copy-btn{
       display:inline-flex; align-items:center; gap:10px; justify-content:center;
       background: linear-gradient(90deg,var(--accent1),var(--accent2));
       border:none; color:white; font-weight:900; cursor:pointer;
-      padding: 14px 24px; border-radius:999px; font-size: clamp(1rem,2.4vw,1.15rem);
-      box-shadow: 0 18px 50px rgba(238,9,121,0.14), inset 0 -6px 18px rgba(0,0,0,0.06);
+      padding: 12px 20px; border-radius:999px; font-size: clamp(0.95rem,2vw,1.1rem);
+      box-shadow: 0 14px 40px rgba(238,9,121,0.14), inset 0 -6px 15px rgba(0,0,0,0.06);
       transition: transform .18s ease, box-shadow .18s ease;
     }
-    .copy-btn:hover{ transform: translateY(-6px) scale(1.03); box-shadow: 0 26px 66px rgba(238,9,121,0.18) }
-
-    .toast{ position:fixed; bottom:20px; right:20px; background:#111; color:#fff; padding:12px 18px; border-radius:12px; opacity:0; transform:translateY(18px); transition:all .36s cubic-bezier(.2,.9,.3,1); z-index:900 }
-    .toast.show{ opacity:1; transform:translateY(0) }
+    .copy-btn:hover{ transform: translateY(-5px) scale(1.03); box-shadow: 0 22px 55px rgba(238,9,121,0.18) }
 
     .fab-button{
       position:fixed; bottom:24px; left:24px;
@@ -67,6 +66,8 @@
     footer{
       width:100%; text-align:center; padding:14px 0; color:#333; background: rgba(255,255,255,0.85);
       box-shadow: 0 -1px 8px rgba(0,0,0,0.1); user-select:none;
+      position:relative;
+      flex-shrink:0;
     }
 
     @media (max-width:600px){ .fab-button{ font-size:1rem; padding:18px 30px } }
