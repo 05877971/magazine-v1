@@ -6,189 +6,100 @@
   <title>מגזין ז'1</title>
   <link rel="icon" type="image/icon" href="magazine.ico" />
   <style>
+    html,body{height:100%;margin:0}
+    :root{--accent1:#ff6a00;--accent2:#ee0979;--accent3:#6a11cb;--accent4:#2575fc}
+
     body {
       font-family: "Segoe UI", Arial, sans-serif;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      min-height: 100vh;
-      margin: 0;
-      background: linear-gradient(135deg, #d4fc79, #96e6a1);
-      text-align: center;
       direction: rtl;
-      padding-bottom: 70px;
-      overflow-x: hidden;
+      overflow:hidden;
+      background: radial-gradient(800px 400px at 10% 15%, rgba(255,220,220,0.25) 0%, transparent 12%),
+                  linear-gradient(135deg, #ffd7a6 0%, #ffe5f1 25%, #cfe9ff 62%, #b3ffd1 100%);
+      display:flex; align-items:center; justify-content:center;
     }
-    .container {
-      padding: 40px;
-      max-width: 850px;
-      background: rgba(255,255,255,0.9);
-      border-radius: 24px;
-      box-shadow: 0 12px 35px rgba(0,0,0,0.15);
-      backdrop-filter: blur(6px);
-      flex-grow: 1;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      gap: 25px;
-      animation: popIn 0.8s ease;
+
+    .highlight-box{
+      box-sizing:border-box;
+      width:100vw; height:100vh;
+      padding:7vh 6vw;
+      display:flex; flex-direction:column; gap:28px; align-items:center; justify-content:center;
+      background: linear-gradient(120deg, rgba(255,255,255,0.06), rgba(255,255,255,0.12));
+      backdrop-filter: blur(6px) saturate(1.05);
     }
-    @keyframes popIn {
-      from { transform: scale(0.9); opacity: 0; }
-      to { transform: scale(1); opacity: 1; }
+
+    h1{ font-size: clamp(1.8rem, 4.2vw, 3.2rem); margin:0; color:#111; text-align:center; }
+    p{ font-size: clamp(1rem, 2.6vw, 1.4rem); margin:0; color:#222; text-align:center }
+
+    .email-wrap{ display:flex; gap:14px; align-items:center; justify-content:center; flex-wrap:wrap }
+    #newsletter-email{ font-weight:900; font-size: clamp(1.05rem, 2.6vw, 1.45rem); color: #081229; text-decoration:none }
+
+    .copy-btn{
+      display:inline-flex; align-items:center; gap:10px; justify-content:center;
+      background: linear-gradient(90deg,var(--accent1),var(--accent2));
+      border:none; color:white; font-weight:900; cursor:pointer;
+      padding: 14px 24px; border-radius:999px; font-size: clamp(1rem,2.4vw,1.15rem);
+      box-shadow: 0 18px 50px rgba(238,9,121,0.14), inset 0 -6px 18px rgba(0,0,0,0.06);
+      transition: transform .18s ease, box-shadow .18s ease;
     }
-    h1 {
-      font-size: 3em;
-      color: #222;
-      margin: 0;
-      text-shadow: 2px 2px 6px rgba(0,0,0,0.15);
-    }
-    h2 {
-      font-size: 2em;
-      color: #ff4d6d;
-      margin: 0;
-    }
-    p {
-      font-size: 1.4em;
-      color: #333;
-      line-height: 1.7;
-    }
-    a {
-      color: #007bff;
-      text-decoration: none;
-      transition: 0.2s;
-      font-weight: bold;
-    }
-    a:hover {
-      text-decoration: underline;
-      color: #0056b3;
-    }
-    .highlight-box {
-      background: linear-gradient(135deg, #e0c3fc, #8ec5fc);
-      border: none;
-      padding: 18px;
-      border-radius: 16px;
-      font-size: 1.3em;
-      color: #222;
-      font-weight: bold;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 12px;
-      flex-wrap: wrap;
-      box-shadow: 0 6px 15px rgba(0,0,0,0.1);
-    }
-    .copy-btn {
-      background: linear-gradient(135deg, #ff6a00, #ee0979);
-      color: white;
-      border: none;
-      border-radius: 50px;
-      padding: 8px 16px;
-      cursor: pointer;
-      font-size: 0.95em;
-      font-weight: bold;
-      transition: transform 0.2s, box-shadow 0.2s;
-    }
-    .copy-btn:hover {
-      transform: scale(1.08);
-      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-    }
-    .toast {
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      background: #222;
-      color: #fff;
-      padding: 12px 20px;
-      border-radius: 12px;
-      font-size: 1em;
-      opacity: 0;
-      transform: translateY(30px);
-      transition: all 0.4s ease;
-      z-index: 1000;
-    }
-    .toast.show {
-      opacity: 1;
-      transform: translateY(0);
-    }
-    .footer {
-      position: fixed;
-      bottom: 0;
-      width: 100%;
-      background: rgba(255,255,255,0.8);
-      text-align: center;
-      font-size: 1em;
-      color: #333;
-      padding: 14px 0;
-      box-shadow: 0 -1px 8px rgba(0, 0, 0, 0.1);
-      direction: rtl;
-      user-select: none;
-    }
-    .fab-button {
-      position: fixed;
-      bottom: 80px;
-      right: 20px;
-      background: linear-gradient(135deg, #28a745, #20c997);
-      color: white;
-      padding: 14px 22px;
-      border-radius: 50px;
-      font-size: 15px;
-      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
-      text-decoration: none;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      z-index: 999;
+    .copy-btn:hover{ transform: translateY(-6px) scale(1.03); box-shadow: 0 26px 66px rgba(238,9,121,0.18) }
+
+    .toast{ position:fixed; bottom:20px; right:20px; background:#111; color:#fff; padding:12px 18px; border-radius:12px; opacity:0; transform:translateY(18px); transition:all .36s cubic-bezier(.2,.9,.3,1); z-index:900 }
+    .toast.show{ opacity:1; transform:translateY(0) }
+
+    .fab-button{
+      position:fixed; bottom:24px; left:24px;
+      background: linear-gradient(135deg,#0ea5a1,#06b6d4);
+      color:#fff; padding:18px 32px;
+      border-radius:999px; font-size:1.1rem;
+      font-weight:bold; text-decoration:none;
+      display:inline-flex; align-items:center; justify-content:center;
+      box-shadow:0 8px 25px rgba(0,0,0,0.25);
       transition: transform 0.25s, box-shadow 0.25s;
     }
-    .fab-button:hover {
-      transform: translateY(-4px) scale(1.07);
-      box-shadow: 0 12px 30px rgba(0,0,0,0.35);
-    }
-    .fab-button svg {
-      width: 22px;
-      height: 22px;
-      fill: white;
-    }
+    .fab-button:hover{ transform:translateY(-4px) scale(1.07); box-shadow:0 12px 30px rgba(0,0,0,0.35) }
+
+    @media (max-width:600px){ .fab-button{ font-size:1rem; padding:14px 26px } }
   </style>
 </head>
 <body>
-  <div class="container">
-    <h1>צרו קשר עם העורכים במייל</h1>
-    <p>
-      אלי: <a href="mailto:8582511c@gmail.com">8582511c@gmail.com</a><br>
-      מענדי: <a href="mailto:amberamaz@gmail.com">amberamaz@gmail.com</a><br>
-      צביקי: <a href="mailto:zvivigler@gmail.com">zvivigler@gmail.com</a>
-    </p>
-    <h2>שליחת כתבות לעלון</h2>
-    <div class="highlight-box">
-      מייל העלון: <a id="newsletter-email" href="mailto:123gilgpok@gmail.com">123gilgpok@gmail.com</a>
-      <button class="copy-btn" onclick="copyEmail()">📋 העתק</button>
+
+  <section class="highlight-box">
+    <p>עורכים: אלי, מענדי וצביקי — ניתן לפנות לכל אחד מהם במייל המופיע מטה.</p>
+
+    <div class="email-wrap">
+      <a href="mailto:8582511c@gmail.com">אלי: 8582511c@gmail.com</a>
+      <a href="mailto:amberamaz@gmail.com">מענדי: amberamaz@gmail.com</a>
+      <a href="mailto:zvivigler@gmail.com">צביקי: zvivigler@gmail.com</a>
     </div>
-  </div>
 
-  <a class="fab-button" href="http://magazine-v1d.hamakom.ovh/" target="_blank">
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-      <path d="M19 3H5a2 2 0 0 0-2 2v14a3 3 0 0 0 3 3h14a1 1 0 0 0 1-1V5a2 2 0 0 0-2-2Zm0 16H6a1 1 0 0 1-1-1V5h14v14ZM8 7h8v2H8V7Zm0 4h8v2H8v-2Zm0 4h5v2H8v-2Z"/>
-    </svg>
-    למעבר לעלון השבועי הדיגיטלי
-  </a>
+    <div class="email-wrap" style="margin-top:6vh;">
+      <div style="text-align:center">
+        <div style="font-size:0.95rem; color:#444; margin-bottom:8px;">שליחת כתבות לעלון — חובה לכתוב בשורת הנושא את המילה: עלון</div>
+        <div style="display:flex; gap:14px; align-items:center; justify-content:center; flex-wrap:wrap">
+          <a id="newsletter-email" data-email="123gilgpok@gmail.com" href="mailto:123gilgpok@gmail.com">123gilgpok@gmail.com</a>
+          <button id="copyBtn" class="copy-btn" onclick="copyEmail(event)">📋 העתק</button>
+        </div>
+      </div>
+    </div>
+  </section>
 
-  <div class="footer">
-    © כל הזכויות שמורות לא. כהן פיתוח ותכנות
-  </div>
+  <a class="fab-button" href="http://magazine-v1d.hamakom.ovh/" target="_blank" rel="noopener noreferrer">למעבר לעלון השבועי-הדיגטלי</a>
 
-  <div id="toast" class="toast">המייל הועתק בהצלחה!</div>
+  <div id="toast" class="toast"></div>
 
   <script>
-    function copyEmail() {
-      const email = document.getElementById("newsletter-email").innerText;
-      navigator.clipboard.writeText(email).then(() => {
-        const toast = document.getElementById("toast");
-        toast.classList.add("show");
-        setTimeout(() => toast.classList.remove("show"), 2500);
-      });
+    function showToast(text){
+      const t=document.getElementById('toast');
+      t.textContent=text;
+      t.classList.add('show');
+      clearTimeout(window._t); window._t=setTimeout(()=>t.classList.remove('show'),2600);
+    }
+    function fallbackCopy(text){
+      try{const ta=document.createElement('textarea');ta.value=text;ta.style.position='fixed';ta.style.left='-9999px';document.body.appendChild(ta);ta.select();document.execCommand('copy');document.body.removeChild(ta);return true;}catch(e){return false;}}
+    async function copyEmail(){
+      const email=document.getElementById('newsletter-email').dataset.email;
+      try{await navigator.clipboard.writeText(email);showToast('המייל הועתק בהצלחה!');}
+      catch(e){const ok=fallbackCopy(email);if(ok)showToast('המייל הועתק בהצלחה!');else showToast('העתקה נכשלה');}
     }
   </script>
 </body>
