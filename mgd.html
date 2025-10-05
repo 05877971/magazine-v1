@@ -55,8 +55,8 @@
     }
     #flipbook-container { margin-top: 30px; }
     #flipbook { width: 800px; height: 600px; margin: auto; box-shadow: 0 0 20px rgba(0,0,0,0.3); }
-    #flipbook .page { width: 400px; height: 600px; background: white; border: 1px solid #ccc; overflow: hidden; }
-    canvas { width: 100%; height: 100%; display: block; }
+    #flipbook .page { width: 400px; height: 600px; background: white; border: 1px solid #ccc; overflow: hidden; display: flex; align-items: center; justify-content: center; }
+    #flipbook .page canvas { width: 100%; height: 100%; object-fit: contain; }
     .buttons { margin-bottom: 10px; }
     .buttons button { padding: 10px 20px; margin: 0 5px; font-size: 16px; cursor: pointer; }
     @media (max-width: 500px) {
@@ -74,11 +74,8 @@
   <p>בחר מהאפשרויות הבאות כדי לגשת לעלון או לדפדף בספר PDF:</p>
 
   <a href="http://magazine-v1.hamakom.ovh/" target="_blank" rel="noopener" class="btn">חזרה לדף הראשי</a>
-
-  <!-- כפתור לא פתיחת Canva נשמר -->
   <a href="https://www.canva.com/design/DAG0Wle33Pk/alOG8Z7nDbY8HrRxVUM0wA/view?utm_content=DAG0Wle33Pk&utm_campaign=designshare&utm_medium=link2&utm_source=uniquelinks&utlId=h6486baf8bd" target="_blank" rel="noopener" class="btn">פתח את העלון ב-Canva</a>
 
-  <!-- אזור הספר PDF -->
   <div id="flipbook-container">
     <div class="buttons">
       <button id="prev">⬅ דף קודם</button>
@@ -90,7 +87,7 @@
   <footer>© כל הזכויות שמורות לא. כהן פיתוח ותכנות</footer>
 
   <script>
-    const url = 'book.pdf'; // כאן שמים את הקובץ PDF
+    const url = 'book.pdf';
     pdfjsLib.getDocument(url).promise.then(function(pdf) {
       const totalPages = pdf.numPages;
       let pages = [];
@@ -98,13 +95,14 @@
 
       for (let pageNum = 1; pageNum <= totalPages; pageNum++) {
         pdf.getPage(pageNum).then(function(page) {
-          const viewport = page.getViewport({ scale: 1.5 });
+          const viewport = page.getViewport({ scale: 1 });
           const canvas = document.createElement('canvas');
           const context = canvas.getContext('2d');
-          canvas.width = viewport.width;
-          canvas.height = viewport.height;
+          canvas.width = 400;  // גודל אחיד
+          canvas.height = 600;
 
-          page.render({canvasContext: context, viewport: viewport}).promise.then(function() {
+          const renderContext = { canvasContext: context, viewport: page.getViewport({ scale: 400 / viewport.width }) };
+          page.render(renderContext).promise.then(function() {
             const pageDiv = document.createElement('div');
             pageDiv.className = 'page';
             pageDiv.appendChild(canvas);
@@ -124,6 +122,10 @@
       }
     });
   </script>
+
+</body>
+</html>
+
 
 </body>
 </html>
