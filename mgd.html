@@ -9,63 +9,20 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/turn.js/4/turn.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <style>
-  body {
-    margin: 0;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background: linear-gradient(135deg, #f0f4f8, #e6ebf2);
-    color: #333;
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
-    align-items: center;
-    justify-content: center;
-    padding: 30px 20px;
-    box-sizing: border-box;
-    text-align: center;
-  }
+  body { margin: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: linear-gradient(135deg, #f0f4f8, #e6ebf2); color: #333; display: flex; flex-direction: column; min-height: 100vh; align-items: center; justify-content: center; padding: 30px 20px; box-sizing: border-box; text-align: center; }
   h1 { font-size: 2rem; color: #2a9d8f; margin-bottom: 20px; }
   p { font-size: 1.1rem; color: #555; margin-bottom: 30px; }
-  a.btn {
-    background: #2a9d8f;
-    color: #fff;
-    border: none;
-    border-radius: 40px;
-    padding: 15px 40px;
-    font-size: 1.2rem;
-    cursor: pointer;
-    text-decoration: none;
-    box-shadow: 0 4px 14px rgba(42, 157, 143, 0.35);
-    transition: background-color 0.3s ease, box-shadow 0.3s ease, transform 0.2s ease;
-    margin: 10px;
-    display: inline-block;
-  }
+  a.btn { background: #2a9d8f; color: #fff; border: none; border-radius: 40px; padding: 15px 40px; font-size: 1.2rem; cursor: pointer; text-decoration: none; box-shadow: 0 4px 14px rgba(42, 157, 143, 0.35); transition: background-color 0.3s ease, box-shadow 0.3s ease, transform 0.2s ease; margin: 10px; display: inline-block; }
   a.btn:hover { background: #21867a; box-shadow: 0 6px 18px rgba(33, 134, 122, 0.5); transform: translateY(-3px); }
-  footer {
-    margin-top: 40px;
-    text-align: center;
-    font-size: 0.9rem;
-    color: #555;
-    padding: 15px 0;
-    user-select: none;
-    background-color: #fafafa;
-    border-radius: 15px;
-    width: 100%;
-    max-width: 900px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-  }
+  footer { margin-top: 40px; text-align: center; font-size: 0.9rem; color: #555; padding: 15px 0; user-select: none; background-color: #fafafa; border-radius: 15px; width: 100%; max-width: 900px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
   #flipbook-container { margin-top: 30px; }
-  #flipbook { width: 800px; height: 600px; margin: auto; box-shadow: 0 0 20px rgba(0,0,0,0.3); }
+  #loading-message { font-size: 2rem; color: #e76f51; font-weight: 900; margin-bottom: 15px; text-shadow: 2px 2px 5px rgba(0,0,0,0.2); }
+  #flipbook { width: 800px; height: 600px; margin: auto; box-shadow: 0 0 20px rgba(0,0,0,0.3); display: none; }
   #flipbook .page { width: 400px; height: 600px; background: white; border: 1px solid #ccc; overflow: hidden; display: flex; align-items: center; justify-content: center; }
   #flipbook .page canvas { width: 100%; height: 100%; object-fit: contain; }
   .buttons { margin-bottom: 10px; }
   .buttons button { padding: 10px 20px; margin: 0 5px; font-size: 16px; cursor: pointer; }
-  @media (max-width: 500px) {
-    h1 { font-size: 1.6rem; }
-    p { font-size: 1rem; }
-    a.btn { width: 100%; padding: 15px 0; font-size: 1rem; }
-    #flipbook { width: 100%; height: auto; }
-    #flipbook .page { width: 100%; height: auto; }
-  }
+  @media (max-width: 500px) { h1 { font-size: 1.6rem; } p { font-size: 1rem; } a.btn { width: 100%; padding: 15px 0; font-size: 1rem; } #flipbook { width: 100%; height: auto; } #flipbook .page { width: 100%; height: auto; } }
 </style>
 </head>
 <body>
@@ -77,6 +34,7 @@
 <a href="https://www.canva.com/design/DAG0Wle33Pk/alOG8Z7nDbY8HrRxVUM0wA/view?utm_content=DAG0Wle33Pk&utm_campaign=designshare&utm_medium=link2&utm_source=uniquelinks&utlId=h6486baf8bd" target="_blank" rel="noopener" class="btn">פתח את העלון ב-Canva</a>
 
 <div id="flipbook-container">
+  <div id="loading-message">📄 העלון נטען...</div>
   <div class="buttons">
     <button id="prev">⬅ דף קודם</button>
     <button id="next">דף הבא ➡</button>
@@ -108,8 +66,10 @@ pdfjsLib.getDocument(url).promise.then(function(pdf) {
         pages[pageNum] = pageDiv;
         loaded++;
         if (loaded === totalPages) {
+          $('#loading-message').fadeOut();
           const flipbook = document.getElementById('flipbook');
           pages.forEach(p => flipbook.appendChild(p));
+          $('#flipbook').show();
           $("#flipbook").turn({ width: 800, height: 600, autoCenter: true });
           $('#prev').click(() => $("#flipbook").turn('previous'));
           $('#next').click(() => $("#flipbook").turn('next'));
