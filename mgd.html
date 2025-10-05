@@ -5,86 +5,224 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>העלון הדיגיטלי</title>
 <link rel="icon" type="image/icon" href="magazine.ico" />
-<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.14.305/pdf.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/turn.js/4/turn.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <style>
-  body { margin: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: linear-gradient(135deg, #f0f4f8, #e6ebf2); color: #333; display: flex; flex-direction: column; min-height: 100vh; align-items: center; justify-content: center; padding: 30px 20px; box-sizing: border-box; text-align: center; }
+  body {
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #f0f4f8, #e6ebf2);
+    color: #333;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    align-items: center;
+    justify-content: center;
+    padding: 30px 20px;
+    box-sizing: border-box;
+    text-align: center;
+  }
   h1 { font-size: 2rem; color: #2a9d8f; margin-bottom: 20px; }
   p { font-size: 1.1rem; color: #555; margin-bottom: 30px; }
-  a.btn { background: #2a9d8f; color: #fff; border: none; border-radius: 40px; padding: 15px 40px; font-size: 1.2rem; cursor: pointer; text-decoration: none; box-shadow: 0 4px 14px rgba(42, 157, 143, 0.35); transition: background-color 0.3s ease, box-shadow 0.3s ease, transform 0.2s ease; margin: 10px; display: inline-block; }
-  a.btn:hover { background: #21867a; box-shadow: 0 6px 18px rgba(33, 134, 122, 0.5); transform: translateY(-3px); }
-  footer { margin-top: 40px; text-align: center; font-size: 0.9rem; color: #555; padding: 15px 0; user-select: none; background-color: #fafafa; border-radius: 15px; width: 100%; max-width: 900px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
-  #flipbook-container { margin-top: 30px; position: relative; width: 100%; display: flex; flex-direction: column; align-items: center; }
-  #loading-message { font-size: 3rem; color: #e76f51; font-weight: 900; margin-bottom: 15px; text-shadow: 2px 2px 5px rgba(0,0,0,0.3); }
-  #flipbook { width: 90vw; max-width: 800px; height: 90vh; max-height: 600px; box-shadow: 0 0 20px rgba(0,0,0,0.3); display: none; }
-  #flipbook .page { width: 50%; height: 100%; background: white; border: 1px solid #ccc; overflow: hidden; display: flex; align-items: center; justify-content: center; }
-  #flipbook .page img { width: 100%; height: 100%; object-fit: contain; }
+  a.btn {
+    background: #2a9d8f;
+    color: #fff;
+    border: none;
+    border-radius: 40px;
+    padding: 15px 40px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    text-decoration: none;
+    box-shadow: 0 4px 14px rgba(42, 157, 143, 0.35);
+    transition: background-color 0.3s ease, box-shadow 0.3s ease, transform 0.2s ease;
+    margin: 10px;
+    display: inline-block;
+  }
+  a.btn:hover {
+    background: #21867a;
+    box-shadow: 0 6px 18px rgba(33, 134, 122, 0.5);
+    transform: translateY(-3px);
+  }
+  footer {
+    margin-top: 40px;
+    text-align: center;
+    font-size: 0.9rem;
+    color: #555;
+    padding: 15px 0;
+    user-select: none;
+    background-color: #fafafa;
+    border-radius: 15px;
+    width: 100%;
+    max-width: 900px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  }
+  #flipbook-container {
+    margin-top: 30px;
+    position: relative;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  #loading-message {
+    font-size: 3rem;
+    color: #e76f51;
+    font-weight: 900;
+    margin-bottom: 15px;
+    text-shadow: 2px 2px 5px rgba(0,0,0,0.3);
+  }
+  #flipbook {
+    width: 90vw;
+    max-width: 800px;
+    height: 90vh;
+    max-height: 600px;
+    box-shadow: 0 0 20px rgba(0,0,0,0.3);
+    display: none; / יוסתר עד שהטעינה תושלם /
+  }
+  #flipbook .page {
+    width: 50%; / כל דף תופס חצי מרוחב ה-flipbook /
+    height: 100%;
+    background: white;
+    border: 1px solid #ccc;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box; / כולל את הגבולות והריפוד ברוחב ובגובה /
+  }
+  #flipbook .page img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain; / שומר על יחס הגובה-רוחב /
+  }
   .buttons { margin-bottom: 10px; }
   .buttons button { padding: 10px 20px; margin: 0 5px; font-size: 16px; cursor: pointer; }
-  @media (max-width: 500px) { h1 { font-size: 1.6rem; } p { font-size: 1rem; } a.btn { width: 100%; padding: 15px 0; font-size: 1rem; } #flipbook { width: 100%; height: auto; } #flipbook .page { width: 100%; height: auto; } }
+
+  / התאמות למסכים קטנים /
+  @media (max-width: 500px) {
+    h1 { font-size: 1.6rem; }
+    p { font-size: 1rem; }
+    a.btn { width: 100%; padding: 15px 0; font-size: 1rem; }
+    #flipbook { width: 100%; height: auto; max-height: none; }
+    #flipbook .page { width: 100%; height: auto; }
+  }
 </style>
 </head>
 <body>
 
-<h1>📖 העלון הדיגיטלי</h1>
-<p>בחר מהאפשרויות הבאות כדי לגשת לעלון או לדפדף בספר PDF:</p>
+  <h1>📖 העלון הדיגיטלי</h1>
+  <p>בחר מהאפשרויות הבאות כדי לגשת לעלון או לדפדף בספר:</p>
 
-<a href="http://magazine-v1.hamakom.ovh/" target="_blank" rel="noopener" class="btn">חזרה לדף הראשי</a>
-<a href="https://www.canva.com/design/DAG0Wle33Pk/alOG8Z7nDbY8HrRxVUM0wA/view?utm_content=DAG0Wle33Pk&utm_campaign=designshare&utm_medium=link2&utm_source=uniquelinks&utlId=h6486baf8bd" target="_blank" rel="noopener" class="btn">פתח את העלון ב-Canva</a>
+  <a href="http://magazine-v1.hamakom.ovh/" target="_blank" rel="noopener" class="btn">חזרה לדף הראשי</a>
+  <a href="https://www.canva.com/design/DAG0Wle33Pk/alOG8Z7nDbY8HrRxVUM0wA/view?utm_content=DAG0Wle33Pk&utm_campaign=designshare&utm_medium=link2&utm_source=uniquelinks&utlId=h6486baf8bd" target="_blank" rel="noopener" class="btn">פתח את העלון ב-Canva</a>
 
-<div id="flipbook-container">
-  <div id="loading-message">📄 העלון נטען...</div>
-  <div class="buttons">
-    <button id="prev">⬅ דף קודם</button>
-    <button id="next">דף הבא ➡</button>
+  <div id="flipbook-container">
+    <div id="loading-message">📄 העלון נטען...</div>
+    <div id="flipbook"></div>
   </div>
-  <div id="flipbook"></div>
-</div>
 
-<footer>© כל הזכויות שמורות לא. כהן פיתוח ותכנות</footer>
+  <footer>© כל הזכויות שמורות לא. כהן פיתוח ותכנות</footer>
 
 <script>
-const url = 'book.pdf';
+$(document).ready(function(){
+  const totalImages = 19; // מספר הדפים
+  const images = [];
+  let loadedImages = 0;
 
-function renderPDFAsImages(pdfUrl) {
-  pdfjsLib.getDocument(pdfUrl).promise.then(function(pdf) {
-    const totalPages = pdf.numPages;
-    let pages = [];
-    let loaded = 0;
-
-    for (let pageNum = 1; pageNum <= totalPages; pageNum++) {
-      pdf.getPage(pageNum).then(function(page) {
-        const viewport = page.getViewport({ scale: 2 }); // Scale higher for better image quality
-        const canvas = document.createElement('canvas');
-        const context = canvas.getContext('2d');
-        canvas.width = viewport.width;
-        canvas.height = viewport.height;
-        page.render({canvasContext: context, viewport: viewport}).promise.then(function() {
-          const img = document.createElement('img');
-          img.src = canvas.toDataURL();
-          const pageDiv = document.createElement('div');
-          pageDiv.className = 'page';
-          pageDiv.appendChild(img);
-          pages[pageNum] = pageDiv;
-          loaded++;
-
-          if (loaded === totalPages) {
-            $('#loading-message').fadeOut();
-            const flipbook = document.getElementById('flipbook');
-            pages.forEach(p => flipbook.appendChild(p));
-            $('#flipbook').show();
-            $("#flipbook").turn({ width: $(window).width()*0.9, height: $(window).height()*0.8, autoCenter: true });
-            $('#prev').click(() => $("#flipbook").turn('previous'));
-            $('#next').click(() => $("#flipbook").turn('next'));
-          }
-        });
-      });
+  // יצירת מערך התמונות לפי זוגות (דף ימין, דף שמאל)
+  // book-1.jpg הוא הדף הראשון (ימין), book-2.jpg הוא הדף השני (שמאל) וכן הלאה.
+  for (let i = 1; i <= totalImages; i += 2) {
+    let pagePair = [];
+    pagePair.push(book-${i}.jpg); // דף ימין
+    if (i + 1 <= totalImages) {
+      pagePair.push(book-${i + 1}.jpg); // דף שמאל
     }
-  });
-}
+    images.push(pagePair);
+  }
 
-renderPDFAsImages(url);
+  function loadFlipbook() {
+    const flipbook = document.getElementById('flipbook');
+
+    images.forEach(pair => {
+      // יצירת div עבור הדף הימני
+      const pageDivRight = document.createElement('div');
+      pageDivRight.className = 'page';
+      const imgRight = document.createElement('img');
+      imgRight.src = pair[0];
+      imgRight.onload = () => {
+        loadedImages++;
+        if (loadedImages === totalImages) {
+          initializeFlipbook();
+        }
+      };
+      imgRight.onerror = () => { // טיפול בשגיאת טעינת תמונה
+        console.error(Error loading image: ${pair[0]});
+        loadedImages++; // ממשיכים הלאה גם אם יש שגיאה
+        if (loadedImages === totalImages) {
+          initializeFlipbook();
+        }
+      };
+      pageDivRight.appendChild(imgRight);
+      flipbook.appendChild(pageDivRight);
+
+      // אם קיים דף שמאל, יצירת div עבורו
+      if (pair[1]) {
+        const pageDivLeft = document.createElement('div');
+        pageDivLeft.className = 'page';
+        const imgLeft = document.createElement('img');
+        imgLeft.src = pair[1];
+        imgLeft.onload = () => {
+          loadedImages++;
+          if (loadedImages === totalImages) {
+            initializeFlipbook();
+          }
+        };
+        imgLeft.onerror = () => { // טיפול בשגיאת טעינת תמונה
+          console.error(Error loading image: ${pair[1]});
+          loadedImages++; // ממשיכים הלאה גם אם יש שגיאה
+          if (loadedImages === totalImages) {
+            initializeFlipbook();
+          }
+        };
+        pageDivLeft.appendChild(imgLeft);
+        flipbook.appendChild(pageDivLeft);
+      }
+    });
+  }
+
+  function initializeFlipbook() {
+    $('#loading-message').fadeOut(function() {
+      $(this).remove(); // הסרת הודעת הטעינה מה-DOM
+    });
+    $('#flipbook').show();
+
+    const bookWidth = $(window).width() * 0.9;
+    const bookHeight = $(window).height() * 0.8;
+
+    $("#flipbook").turn({
+      width: bookWidth,
+      height: bookHeight,
+      autoCenter: true,
+      display: 'double', // הצגה בזוגות
+      when: {
+        turning: function(e, page, view) {
+          // ניתן להוסיף פה פונקציות נוספות שקורות בזמן סיבוב דף
+        }
+      }
+    });
+
+    // עדכון גודל הספר בעת שינוי גודל החלון
+    $(window).resize(function() {
+      $("#flipbook").turn("resize", bookWidth, bookHeight);
+    });
+
+    // ניווט
+    $('#prev').click(() => $("#flipbook").turn('previous'));
+    $('#next').click(() => $("#flipbook").turn('next'));
+  }
+
+  loadFlipbook();
+});
 </script>
 
 </body>
