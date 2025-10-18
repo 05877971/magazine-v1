@@ -44,12 +44,62 @@
     transform: translateY(-3px);
   }
 
-  iframe, embed {
-    width: 90vw;
-    height: 90vh;
+  .content-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 25px;
+    justify-content: center;
+    align-items: flex-start;
+    width: 100%;
+    max-width: 1100px;
+    margin-top: 30px;
+  }
+
+  iframe {
+    flex: 1 1 500px;
+    height: 85vh;
     border: none;
     box-shadow: 0 0 20px rgba(0,0,0,0.3);
     border-radius: 15px;
+  }
+
+  .video-section {
+    flex: 1 1 400px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+  }
+
+  h2 {
+    color: #e76f51;
+    font-size: 1.5rem;
+    margin: 0;
+  }
+
+  video {
+    width: 100%;
+    max-width: 600px;
+    border-radius: 15px;
+    box-shadow: 0 0 20px rgba(0,0,0,0.3);
+    background-color: #000;
+  }
+
+  .download-btn {
+    background: #e76f51;
+    color: #fff;
+    border: none;
+    border-radius: 30px;
+    padding: 12px 30px;
+    font-size: 1rem;
+    cursor: pointer;
+    text-decoration: none;
+    box-shadow: 0 4px 10px rgba(231, 111, 81, 0.4);
+    transition: background 0.3s ease, transform 0.2s ease;
+  }
+  .download-btn:hover {
+    background: #d65a40;
+    transform: scale(1.05);
   }
 
   footer {
@@ -66,25 +116,39 @@
     box-shadow: 0 2px 8px rgba(0,0,0,0.08);
   }
 
-  @media (max-width: 600px) {
-    iframe, embed { height: 70vh; width: 100%; }
-    h1 { font-size: 1.6rem; }
-    p { font-size: 1rem; }
+  @media (max-width: 800px) {
+    .content-wrapper {
+      flex-direction: column;
+      align-items: center;
+    }
+    iframe, video {
+      width: 100%;
+      height: 70vh;
+    }
   }
 </style>
 </head>
 <body>
 
   <h1>📖 העלון הדיגיטלי</h1>
-  <p>צפה ישירות בעלון כאן:</p>
+  <p>צפה ישירות בעלון ובסרטון של קומיקול סוכות:</p>
 
   <a href="http://magazine-v1.hamakom.ovh/" target="_blank" rel="noopener" class="btn">חזרה לדף הראשי</a>
-  <a href="https://www.canva.com/design/DAG1yRz45YY/SM3jPBTyLBtgBXFJDkTGsA/view?utm_content=DAG1yRz45YY&utm_campaign=designshare&utm_medium=link2&utm_source=uniquelinks&utlId=hf896e96283" target="_blank" rel="noopener" class="btn">פתח ב-Canva</a>
+  <a href="https://www.canva.com/design/DAG0Wle33Pk/alOG8Z7nDbY8HrRxVUM0wA/view?utm_content=DAG0Wle33Pk&utm_campaign=designshare&utm_medium=link2&utm_source=uniquelinks&utlId=h6486baf8bd" target="_blank" rel="noopener" class="btn">פתח ב-Canva</a>
 
-  <!-- כאן מתבצעת ההטמעה של קובץ ה-PDF -->
-  <div style="margin-top:30px;">
+  <div class="content-wrapper">
+    <!-- PDF -->
     <iframe src="alon.pdf" title="העלון הדיגיטלי"></iframe>
-    <!-- לחלופין: <embed src="alon.pdf" type="application/pdf"> -->
+
+    <!-- וידאו -->
+    <div class="video-section">
+      <h2>🎧 האזינו לקומיצחוק – בקומיקול</h2>
+      <video controls preload="metadata" poster="thumbnail.jpg">
+        <source src="komikol-sukot.mp4" type="video/mp4">
+        הדפדפן שלך אינו תומך בווידאו.
+      </video>
+      <a href="קומיקול-סוכות.mp4" download class="download-btn">📥 הורד את הסרטון</a>
+    </div>
   </div>
 
   <footer>© כל הזכויות שמורות לא. כהן פיתוח ותכנות</footer>
