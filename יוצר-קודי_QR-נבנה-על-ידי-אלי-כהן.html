@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<title>יצירת קוד QR</title>
+<script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
+<style>
+  body {
+    font-family: 'Arial', sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    margin: 0;
+    background: linear-gradient(135deg, #f0f4ff, #c6d9ff);
+    color: #333;
+  }
+  h2 {
+    margin-bottom: 20px;
+    font-size: 28px;
+    color: #1a1a1a;
+  }
+  input {
+    padding: 12px;
+    margin: 10px 0;
+    font-size: 16px;
+    border-radius: 8px;
+    border: 1px solid #aaa;
+    width: 320px;
+  }
+  button {
+    padding: 12px 20px;
+    font-size: 16px;
+    border-radius: 8px;
+    border: none;
+    background-color: #4a90e2;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  button:hover {
+    background-color: #3571b3;
+  }
+  canvas {
+    margin-top: 30px;
+    border: 2px solid #333;
+    border-radius: 12px;
+  }
+  footer {
+    position: absolute;
+    bottom: 20px;
+    font-size: 18px;
+    color: #1a1a1a;
+    font-weight: bold;
+    font-style: italic;
+    text-shadow: 2px 2px 5px #aaa;
+    letter-spacing: 1px;
+    font-family: 'Courier New', Courier, monospace;
+  }
+</style>
+</head>
+<body>
+<h2>צור קוד QR לקישור שלך</h2>
+<input type="text" id="urlInput" placeholder="הכנס כתובת אתר">
+<button onclick="generateQR()">צור קוד QR</button>
+<canvas id="qrCanvas"></canvas>
+<footer>נבנה ופותח על ידי אלי כהן</footer>
+
+<script>
+function generateQR() {
+    const url = document.getElementById('urlInput').value;
+    const canvas = document.getElementById('qrCanvas');
+
+    QRCode.toCanvas(canvas, url, {
+        color: {
+            dark: '#000000',
+            light: '#00000000' // שקוף
+        }
+    }, function (error) {
+        if (error) console.error(error);
+        else console.log('QR code נוצר בהצלחה!');
+    });
+}
+</script>
+</body>
+</html>
