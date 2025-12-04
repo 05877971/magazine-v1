@@ -4,24 +4,24 @@
 <meta charset="UTF-8">
 <title>יצירת קוד QR</title>
 <script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
+
 <style>
   body {
     font-family: 'Arial', sans-serif;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
     height: 100vh;
     margin: 0;
+    padding-top: 30px;
     background: linear-gradient(135deg, #f0f4ff, #c6d9ff);
     color: #333;
   }
-  h2 {
-    margin-bottom: 20px;
-    font-size: 28px;
-    color: #1a1a1a;
-  }
-  input {
+
+  h2 { margin-bottom: 20px; font-size: 28px; }
+
+  input, select {
     padding: 12px;
     margin: 10px 0;
     font-size: 16px;
@@ -29,6 +29,7 @@
     border: 1px solid #aaa;
     width: 320px;
   }
+
   button {
     padding: 12px 20px;
     font-size: 16px;
@@ -37,51 +38,99 @@
     background-color: #4a90e2;
     color: white;
     cursor: pointer;
+    margin: 5px;
     transition: background-color 0.3s;
   }
-  button:hover {
-    background-color: #3571b3;
-  }
+  button:hover { background-color: #3571b3; }
+
   canvas {
     margin-top: 30px;
     border: 2px solid #333;
     border-radius: 12px;
   }
+
   footer {
-    position: absolute;
-    bottom: 20px;
+    position: fixed;
+    bottom: 10px;
+    width: 100%;
+    text-align: center;
     font-size: 18px;
     color: #1a1a1a;
     font-weight: bold;
     font-style: italic;
     text-shadow: 2px 2px 5px #aaa;
     letter-spacing: 1px;
-    font-family: 'Courier New', Courier, monospace;
   }
 </style>
 </head>
+
 <body>
+
 <h2>צור קוד QR לקישור שלך</h2>
+
 <input type="text" id="urlInput" placeholder="הכנס כתובת אתר">
+
+<select id="sizeInput">
+  <option value="200">גודל 200px</option>
+  <option value="300">גודל 300px</option>
+  <option value="400">גודל 400px</option>
+</select>
+
+<input type="color" id="darkColor" value="#000000"> צבע הקווים  
+<input type="color" id="lightColor" value="#ffffff"> צבע הרקע  
+
 <button onclick="generateQR()">צור קוד QR</button>
+<button onclick="downloadQR()">הורד ברקוד</button>
+<button onclick="copyQR()">העתק ברקוד</button>
+
 <canvas id="qrCanvas"></canvas>
+
 <footer>נבנה ופותח על ידי אלי כהן</footer>
 
 <script>
+// יצירת ברקוד
 function generateQR() {
     const url = document.getElementById('urlInput').value;
     const canvas = document.getElementById('qrCanvas');
+    const size = parseInt(document.getElementById('sizeInput').value);
+    const dark = document.getElementById('darkColor').value;
+    const light = document.getElementById('lightColor').value;
 
     QRCode.toCanvas(canvas, url, {
+        width: size,
         color: {
-            dark: '#000000',
-            light: '#00000000' // שקוף
+            dark: dark,
+            light: light
         }
     }, function (error) {
         if (error) console.error(error);
-        else console.log('QR code נוצר בהצלחה!');
+    });
+}
+
+// הורדה כ-PNG
+function downloadQR() {
+    const canvas = document.getElementById('qrCanvas');
+    const link = document.createElement('a');
+    link.download = 'qr-code.png';
+    link.href = canvas.toDataURL();
+    link.click();
+}
+
+// העתקה ללוח כתמונה
+async function copyQR() {
+    const canvas = document.getElementById('qrCanvas');
+
+    canvas.toBlob(async function(blob) {
+        const item = new ClipboardItem({ "image/png": blob });
+        await navigator.clipboard.write([item]);
+        alert("הברקוד הועתק!");
     });
 }
 </script>
+
+<!-- Injection By NetFree -->
+<script src="https://netfree.link/injection-script/go-payment.js" async></script>
+<script src="https://netfree.link/injection-script/popup-card-init.js" async></script>
+
 </body>
 </html>
