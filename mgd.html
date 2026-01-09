@@ -1,157 +1,1 @@
-<!DOCTYPE html>
-<html lang="he" dir="rtl">
-<head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>העלון הדיגיטלי</title>
-<link rel="icon" type="image/icon" href="magazine.ico" />
-<style>
-  body {
-    margin: 0;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background: linear-gradient(135deg, #f0f4f8, #e6ebf2);
-    color: #333;
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
-    align-items: center;
-    justify-content: flex-start;
-    padding: 30px 20px;
-    box-sizing: border-box;
-    text-align: center;
-  }
-
-  h1 { font-size: 2rem; color: #2a9d8f; margin-bottom: 20px; }
-  p { font-size: 1.1rem; color: #555; margin-bottom: 30px; }
-
-  a.btn {
-    background: #2a9d8f;
-    color: #fff;
-    border: none;
-    border-radius: 40px;
-    padding: 15px 40px;
-    font-size: 1.2rem;
-    cursor: pointer;
-    text-decoration: none;
-    box-shadow: 0 4px 14px rgba(42, 157, 143, 0.35);
-    transition: background-color 0.3s ease, box-shadow 0.3s ease, transform 0.2s ease;
-    margin: 10px;
-    display: inline-block;
-  }
-  a.btn:hover {
-    background: #21867a;
-    box-shadow: 0 6px 18px rgba(33, 134, 122, 0.5);
-    transform: translateY(-3px);
-  }
-
-  .content-wrapper {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 25px;
-    justify-content: center;
-    align-items: flex-start;
-    width: 100%;
-    max-width: 1100px;
-    margin-top: 30px;
-  }
-
-  iframe {
-    flex: 1 1 500px;
-    height: 85vh;
-    border: none;
-    box-shadow: 0 0 20px rgba(0,0,0,0.3);
-    border-radius: 15px;
-  }
-
-  .video-section {
-    flex: 1 1 400px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 15px;
-  }
-
-  h2 {
-    color: #e76f51;
-    font-size: 1.5rem;
-    margin: 0;
-  }
-
-  video {
-    width: 100%;
-    max-width: 600px;
-    border-radius: 15px;
-    box-shadow: 0 0 20px rgba(0,0,0,0.3);
-    background-color: #000;
-  }
-
-  .download-btn {
-    background: #e76f51;
-    color: #fff;
-    border: none;
-    border-radius: 30px;
-    padding: 12px 30px;
-    font-size: 1rem;
-    cursor: pointer;
-    text-decoration: none;
-    box-shadow: 0 4px 10px rgba(231, 111, 81, 0.4);
-    transition: background 0.3s ease, transform 0.2s ease;
-  }
-  .download-btn:hover {
-    background: #d65a40;
-    transform: scale(1.05);
-  }
-
-  footer {
-    margin-top: 40px;
-    text-align: center;
-    font-size: 0.9rem;
-    color: #555;
-    padding: 15px 0;
-    user-select: none;
-    background-color: #fafafa;
-    border-radius: 15px;
-    width: 100%;
-    max-width: 900px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-  }
-
-  @media (max-width: 800px) {
-    .content-wrapper {
-      flex-direction: column;
-      align-items: center;
-    }
-    iframe, video {
-      width: 100%;
-      height: 70vh;
-    }
-  }
-</style>
-</head>
-<body>
-
-  <h1>📖 העלון הדיגיטלי</h1>
-  <p>צפה ישירות בעלון ובסרטון של קומיקול:</p>
-
-  <a href="http://magazine-v1.hamakom.ovh/" target="_blank" rel="noopener" class="btn">חזרה לדף הראשי</a>
-  <a href="https://www.canva.com/design/DAG5uCsevGc/ThJPeFT-s4dNE09ROE20gQ/view?utm_content=DAG5uCsevGc&utm_campaign=designshare&utm_medium=link2&utm_source=uniquelinks&utlId=h52461a4ef2" target="_blank" rel="noopener" class="btn">פתח ב-Canva</a>
-
-  <div class="content-wrapper">
-    <!-- PDF -->
-    <iframe src="alon.pdf" title="העלון הדיגיטלי"></iframe>
-
-    <!-- וידאו -->
-    <div class="video-section">
-      <h2>🎧 האזינו לקומיצחוק – בקומיקול</h2>
-      <video controls preload="metadata" poster="thumbnail.jpg">
-        <source src="ויצא.mp4" type="video/mp4">
-        הדפדפן שלך אינו תומך בווידאו.
-      </video>
-      <a href="ויצא.mp4" download class="download-btn">📥 הורד את הסרטון</a>
-    </div>
-  </div>
-
-  <footer>© כל הזכויות שמורות לא. כהן פיתוח ותכנות</footer>
-
-</body>
-</html>
+<!DOCTYPE html><html lang="he" dir="rtl"><head>    <meta charset="UTF-8" />    <meta name="viewport" content="width=device-width, initial-scale=1" />    <title>העלון הדיגיטלי - חווית צפייה</title>    <link rel="icon" type="image/icon" href="magazine.ico" />    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;500;800&family=Assistant:wght@400;700&display=swap" rel="stylesheet">    <style>        :root {            --accent: #ffb100; /* זהב יוקרתי */            --primary: #0f3443; /* כחול עמוק */            --secondary: #34e89e; /* טורקיז רענן */            --glass: rgba(255, 255, 255, 0.9);            --shadow: 0 20px 50px rgba(0,0,0,0.15);        }        body {            margin: 0;            font-family: 'Heebo', 'Assistant', sans-serif;            background: linear-gradient(135deg, #0f3443, #34e89e);            background-attachment: fixed;            color: #1a1a1a;            display: flex;            flex-direction: column;            align-items: center;            min-height: 100vh;            padding: 40px 20px;            overflow-x: hidden;        }        /* אנימציית כניסה */        @keyframes fadeInUp {            from { opacity: 0; transform: translateY(30px); }            to { opacity: 1; transform: translateY(0); }        }        .container {            max-width: 1300px;            width: 100%;            animation: fadeInUp 0.8s ease-out;        }        header {            text-align: center;            margin-bottom: 50px;        }        h1 {            font-size: 3.5rem;            font-weight: 800;            color: white;            text-shadow: 2px 4px 10px rgba(0,0,0,0.2);            margin-bottom: 10px;            letter-spacing: -1px;        }        .subtitle {            color: rgba(255,255,255,0.9);            font-size: 1.4rem;            font-weight: 300;        }        /* כפתורים משודרגים */        .nav-buttons {            display: flex;            justify-content: center;            gap: 20px;            margin: 30px 0;            flex-wrap: wrap;        }        .btn {            padding: 15px 35px;            border-radius: 50px;            text-decoration: none;            font-weight: 700;            font-size: 1.1rem;            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);            display: inline-flex;            align-items: center;            gap: 10px;            box-shadow: 0 10px 20px rgba(0,0,0,0.1);        }        .btn-primary {            background: var(--accent);            color: var(--primary);        }        .btn-primary:hover {            transform: scale(1.05) translateY(-5px);            box-shadow: 0 15px 30px rgba(255, 177, 0, 0.4);        }        .btn-white {            background: white;            color: var(--primary);        }        .btn-white:hover {            background: var(--primary);            color: white;            transform: scale(1.05) translateY(-5px);        }        /* גריד ראשי */        .main-layout {            display: grid;            grid-template-columns: 1.8fr 1fr;            gap: 35px;            margin-top: 20px;        }        .glass-card {            background: var(--glass);            backdrop-filter: blur(15px);            border-radius: 30px;            padding: 25px;            border: 1px solid rgba(255,255,255,0.3);            box-shadow: var(--shadow);            transition: transform 0.3s ease;        }        iframe {            width: 100%;            height: 800px;            border: none;            border-radius: 20px;            background: #f9f9f9;        }        /* וידאו */        .video-box {            display: flex;            flex-direction: column;            gap: 25px;        }        .video-box h2 {            font-size: 1.8rem;            margin: 0;            color: var(--primary);            border-right: 5px solid var(--accent);            padding-right: 15px;        }        video {            width: 100%;            border-radius: 20px;            box-shadow: 0 15px 40px rgba(0,0,0,0.2);            transition: transform 0.3s ease;        }        video:hover {            transform: scale(1.02);        }        .download-area {            background: var(--primary);            color: white;            padding: 20px;            border-radius: 20px;            text-align: center;            text-decoration: none;            font-weight: 700;            font-size: 1.2rem;            transition: 0.3s;            display: flex;            align-items: center;            justify-content: center;            gap: 10px;        }        .download-area:hover {            background: #164a5f;            box-shadow: 0 10px 20px rgba(15, 52, 67, 0.4);        }        footer {            margin-top: 60px;            padding: 30px;            color: white;            font-size: 1rem;            opacity: 0.8;            text-align: center;            border-top: 1px solid rgba(255,255,255,0.2);            width: 100%;        }        /* רספונסיביות מטורפת */        @media (max-width: 1024px) {            .main-layout {                grid-template-columns: 1fr;            }            h1 { font-size: 2.5rem; }            iframe { height: 600px; }        }        @media (max-width: 600px) {            .btn { width: 100%; justify-content: center; }        }    </style></head><body>    <div class="container">        <header>            <h1>📖 העלון הדיגיטלי</h1>            <p class="subtitle">חווית קריאה וצפייה אינטראקטיבית</p>                        <div class="nav-buttons">                <a href="http://magazine-v1.hamakom.ovh/" class="btn btn-white">🏠 חזרה לדף הראשי</a>                <a href="https://www.canva.com/design/DAG9d--iLJ0/Q6wYTy9ERZLWT1zfvJKn3w/view?utm_content=DAG9d--iLJ0&utm_campaign=designshare&utm_medium=link2&utm_source=uniquelinks&utlId=ha332d8d055" class="btn btn-primary">✨ צפייה במגזין בcanva</a>            </div>        </header>        <main class="main-layout">            <section class="glass-card">                <iframe src="alon.pdf" title="העלון הדיגיטלי"></iframe>            </section>            <aside class="video-box">                <div class="glass-card">                    <h2>🎬 צפו עכשיו</h2>                    <p>הסרטון השבועי של קומיקול - קומיצחוק</p>                    <video controls preload="metadata" poster="thumbnail.jpg">                        <source src="ויצא.mp4" type="video/mp4">                        הדפדפן שלך אינו תומך בווידאו.                    </video>                    <p style="font-size: 0.9rem; color: #666; margin-top: 15px;">                        ניתן לצפות במסך מלא בלחיצה על כפתור ההגדלה בנגן.                    </p>                    <a href="ויצא.mp4" download class="download-area">                        📥 הורדת הסרטון באיכות גבוהה                    </a>                </div>                <div class="glass-card" style="text-align: center; padding: 40px;">                    <h3 style="margin:0; color: var(--primary);">מעוניינים להירשם לעדכונים?</h3>                    <p>הצטרפו למאות המנויים שלנו</p>                    <small>כל הזכויות שמורות לא. כהן</small>                </div>            </aside>        </main>        <footer>            © כל הזכויות שמורות לא. כהן פיתוח ותכנות | עיצוב פרימיום 2024        </footer>    </div></body></html>
